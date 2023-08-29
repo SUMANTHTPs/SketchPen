@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { SketchPicker } from "react-color";
 
 const DrawingCanvas = () => {
   const canvasRef = useRef(null);
@@ -11,6 +12,8 @@ const DrawingCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth - 100;
+    canvas.height = window.innerHeight - 100;
     setContext(ctx);
   }, []);
 
@@ -83,14 +86,18 @@ const DrawingCanvas = () => {
         onMouseMove={draw}
         onMouseUp={endDrawing}
         onMouseOut={endDrawing}
-        style={{ border: "1px solid black", backgroundColor }}
+        style={{
+          border: ".1px solid lightgrey",
+          backgroundColor,
+          borderRadius: "16px",
+        }}
       ></canvas>
       <div>
-        <label>Background Color: </label>
-        <input
-          type="color"
-          value={backgroundColor}
-          onChange={handleBackgroundColorChange}
+        <SketchPicker
+          color={backgroundColor}
+          onChange={(color) => {
+            setBackgroundColor(color.hex);
+          }}
         />
       </div>
       <div>
