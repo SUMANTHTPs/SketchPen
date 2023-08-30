@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { SketchPicker } from "react-color";
 import { ReactComponent as DownloadIcon } from "../icons/download.svg";
+import { ReactComponent as RefreshIcon } from "../icons/refresh.svg";
+import { ReactComponent as ExportIcon } from "../icons/export.svg";
+import { ReactComponent as ImportIcon } from "../icons/import.svg";
 
 const DrawingCanvas = () => {
   const canvasRef = useRef(null);
@@ -15,7 +18,7 @@ const DrawingCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth * 0.93;
+    canvas.width = window.innerWidth * 0.96;
     canvas.height = window.innerHeight * 0.85;
     setContext(ctx);
   }, []);
@@ -31,11 +34,10 @@ const DrawingCanvas = () => {
   const draw = (event) => {
     if (!drawing) return;
     const { offsetX, offsetY } = event.nativeEvent;
-
+    // Set the composite operation
     context.globalCompositeOperation = erasing
       ? "destination-out"
-      : "source-over"; // Set the composite operation
-
+      : "source-over";
     context.lineTo(offsetX, offsetY);
     context.stroke();
   };
@@ -43,7 +45,8 @@ const DrawingCanvas = () => {
   const endDrawing = () => {
     context.closePath();
     setDrawing(false);
-    context.globalCompositeOperation = "source-over"; // Reset the composite operation to default
+    // Reset the composite operation to default
+    context.globalCompositeOperation = "source-over";
   };
 
   const clearCanvas = () => {
@@ -57,14 +60,8 @@ const DrawingCanvas = () => {
     setBackgroundColor(event.target.value);
   };
 
-  const handlePenColorChange = (event) => {
-    setPenColor(event.target.value);
-    context.strokeStyle = event.target.value;
-  };
-
   const downloadCanvas = () => {
     const canvas = canvasRef.current;
-
     // Create a temporary canvas to draw the background color
     const tempCanvas = document.createElement("canvas");
     tempCanvas.width = canvas.width;
@@ -72,10 +69,8 @@ const DrawingCanvas = () => {
     const tempCtx = tempCanvas.getContext("2d");
     tempCtx.fillStyle = backgroundColor;
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
     // Draw the original canvas content onto the temporary canvas
     tempCtx.drawImage(canvas, 0, 0);
-
     // Convert the temporary canvas to a data URL and initiate download
     const image = tempCanvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -93,25 +88,24 @@ const DrawingCanvas = () => {
     const dataURL = canvas.toDataURL(); // Convert canvas content to a data URL
     const storedData = {
       dataURL,
-      backgroundColor, // Use the background color state directly
+      backgroundColor,
     };
-
-    localStorage.setItem("savedDrawingData", JSON.stringify(storedData)); // Store the data in localStorage
+    localStorage.setItem("savedDrawingData", JSON.stringify(storedData));
   };
   const loadFromLocalStorage = () => {
-    const savedDrawingData = localStorage.getItem("savedDrawingData"); // Retrieve the saved data from localStorage
+    const savedDrawingData = localStorage.getItem("savedDrawingData"); 
     if (savedDrawingData) {
       const { dataURL, backgroundColor } = JSON.parse(savedDrawingData);
-
-      setBackgroundColor(backgroundColor); // Set the background color
-
+      // Set the background color
+      setBackgroundColor(backgroundColor);
       // Clear the canvas and fill it with the new background color
       context.fillStyle = backgroundColor;
       context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
       const image = new Image();
+      // Draw the saved image onto the canvas
       image.onload = () => {
-        context.drawImage(image, 0, 0); // Draw the saved image onto the canvas
+        context.drawImage(image, 0, 0);
       };
       image.src = dataURL;
     }
@@ -147,8 +141,8 @@ const DrawingCanvas = () => {
           <button onClick={() => setToggle(!toggle)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="28"
+              height="28"
               fill={penColor}
               className="bi bi-pencil-fill pen"
               viewBox="0 0 16 16"
@@ -171,23 +165,8 @@ const DrawingCanvas = () => {
             }}
           />
         </button>
-        <button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            class="bi bi-arrow-clockwise"
-            viewBox="0 0 16 16"
-            onClick={clearCanvas}
-            style={{ paddingTop: "2px" }}
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
-            />
-            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-          </svg>
+        <button onClick={clearCanvas} style={{ paddingTop: "2px" }}>
+          <RefreshIcon />
         </button>
         <button onClick={downloadCanvas}>
           <DownloadIcon />
@@ -196,7 +175,7 @@ const DrawingCanvas = () => {
           <input
             type="range"
             min="1"
-            max="10"
+            max="20"
             value={penSize}
             className="slider"
             id="myRange"
@@ -207,30 +186,10 @@ const DrawingCanvas = () => {
           {erasing ? "Pen" : "Eraser"}
         </button>
         <button onClick={saveToLocalStorage}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-download"
-            viewBox="0 0 16 16"
-          >
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-          </svg>
+          <ExportIcon />
         </button>
         <button onClick={loadFromLocalStorage}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-upload"
-            viewBox="0 0 16 16"
-          >
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-          </svg>
+          <ImportIcon />
         </button>
       </div>
     </div>
