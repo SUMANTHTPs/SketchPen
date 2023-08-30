@@ -1,11 +1,10 @@
 * {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .sketch-picker {
@@ -16,27 +15,77 @@
 .container {
   position: relative;
   margin: 20px 30px;
+  cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23000' class='bi bi-pen' viewBox='0 0 16 16'%3E%3Cpath d='m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z'/%3E%3C/svg%3E"),
+    auto;
 }
 
 .options {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   border: 2px solid lightgrey;
-  padding: 8px;
+  padding: 16px;
   border-radius: 8px;
   position: absolute;
   bottom: 2vh;
   align-items: center;
   justify-content: center;
   background-color: #fff;
-  left: 50%; 
+  left: 50%;
   transform: translate(-50%, -60%);
+  cursor: auto;
+}
+.rubber-cursor {
+  cursor: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32"%3E%3Ccircle cx="16" cy="16" r="14" fill="white" stroke="black" stroke-width="2" /%3E%3C/svg%3E')
+      16 16,
+    auto;
 }
 
 .pen {
-    border: .5px solid grey;
-    padding: 4px;
-    border-radius: 4px;
-    background-color: hsl(0, 0%, 83%);
+  border: 0.5px solid grey;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: hsl(0, 0%, 83%);
+}
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 60px;
+  border-bottom: 0.3px solid grey;
+  box-shadow: 1px 1px 5px 2px lightblue;
+  padding: 4px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  padding: 0 8px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .container,
+  .nav-container {
+    max-width: 120vw;
+    position: relative;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    max-width: 25px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left:100%;
+    transform: translate(-50%, -60%);
+  }
+
+  .slider {
+    width: 120%;
+  }
 }

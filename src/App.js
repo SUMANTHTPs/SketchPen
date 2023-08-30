@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import DrawingCanvas from './components/DrawingCanvas';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div>
-      <h1>Simple Drawing Canvas</h1>
+      <Navbar />
       <DrawingCanvas />
     </div>
   );
