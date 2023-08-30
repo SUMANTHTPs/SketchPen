@@ -3,6 +3,11 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 .sketch-picker {
   position: absolute;
   bottom: 7vh;
