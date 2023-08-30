@@ -15,8 +15,8 @@ const DrawingCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth - 100;
-    canvas.height = window.innerHeight - 100;
+    canvas.width = window.innerWidth * 0.93;
+    canvas.height = window.innerHeight * 0.85;
     setContext(ctx);
   }, []);
 
@@ -98,7 +98,6 @@ const DrawingCanvas = () => {
 
     localStorage.setItem("savedDrawingData", JSON.stringify(storedData)); // Store the data in localStorage
   };
-
   const loadFromLocalStorage = () => {
     const savedDrawingData = localStorage.getItem("savedDrawingData"); // Retrieve the saved data from localStorage
     if (savedDrawingData) {
@@ -106,22 +105,17 @@ const DrawingCanvas = () => {
 
       setBackgroundColor(backgroundColor); // Set the background color
 
+      // Clear the canvas and fill it with the new background color
+      context.fillStyle = backgroundColor;
+      context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
       const image = new Image();
       image.onload = () => {
-        context.fillStyle = backgroundColor;
-        context.fillRect(
-          0,
-          0,
-          canvasRef.current.width,
-          canvasRef.current.height
-        ); // Fill the canvas with the background color
         context.drawImage(image, 0, 0); // Draw the saved image onto the canvas
       };
       image.src = dataURL;
     }
   };
-
-
 
   return (
     <div className={erasing ? "container rubber-cursor" : "container"}>
@@ -196,7 +190,7 @@ const DrawingCanvas = () => {
           </svg>
         </button>
         <button onClick={downloadCanvas}>
-            <DownloadIcon />
+          <DownloadIcon />
         </button>
         <div>
           <input
