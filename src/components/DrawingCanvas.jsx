@@ -4,6 +4,8 @@ import { ReactComponent as DownloadIcon } from "../icons/download.svg";
 import { ReactComponent as RefreshIcon } from "../icons/refresh.svg";
 import { ReactComponent as ExportIcon } from "../icons/export.svg";
 import { ReactComponent as ImportIcon } from "../icons/import.svg";
+import { ReactComponent as EraserIcon } from "../icons/eraser.svg";
+import { ReactComponent as WriteIcon } from "../icons/write.svg";
 
 const DrawingCanvas = () => {
   const canvasRef = useRef(null);
@@ -183,7 +185,7 @@ const DrawingCanvas = () => {
           />
         </div>
         <button onClick={() => setErasing(!erasing)}>
-          {erasing ? "Pen" : "Eraser"}
+          {erasing ? <WriteIcon /> : <EraserIcon />}
         </button>
         <button onClick={saveToLocalStorage}>
           <ExportIcon />
