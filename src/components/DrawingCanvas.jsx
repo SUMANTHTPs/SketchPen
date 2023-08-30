@@ -91,19 +91,36 @@ const DrawingCanvas = () => {
   const saveToLocalStorage = () => {
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL(); // Convert canvas content to a data URL
-    localStorage.setItem("savedDrawing", dataURL); // Store the data URL in localStorage
+    const storedData = {
+      dataURL,
+      backgroundColor, // Use the background color state directly
+    };
+
+    localStorage.setItem("savedDrawingData", JSON.stringify(storedData)); // Store the data in localStorage
   };
 
   const loadFromLocalStorage = () => {
-    const savedDrawing = localStorage.getItem("savedDrawing"); // Retrieve the saved data URL from localStorage
-    if (savedDrawing) {
+    const savedDrawingData = localStorage.getItem("savedDrawingData"); // Retrieve the saved data from localStorage
+    if (savedDrawingData) {
+      const { dataURL, backgroundColor } = JSON.parse(savedDrawingData);
+
+      setBackgroundColor(backgroundColor); // Set the background color
+
       const image = new Image();
       image.onload = () => {
+        context.fillStyle = backgroundColor;
+        context.fillRect(
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height
+        ); // Fill the canvas with the background color
         context.drawImage(image, 0, 0); // Draw the saved image onto the canvas
       };
-      image.src = savedDrawing;
+      image.src = dataURL;
     }
   };
+
 
 
   return (
