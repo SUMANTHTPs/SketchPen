@@ -58,6 +58,7 @@ const DrawingCanvas = () => {
         onMouseMove={draw}
         onMouseUp={endDrawing}
         onMouseOut={endDrawing}
+        className="drawing-canvas"
         style={{
           border: ".1px solid lightgrey",
           backgroundColor,

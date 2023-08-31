@@ -116,3 +116,30 @@ footer {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
+@media (max-width: 780px) {
+  .container, .nav-container {
+    margin: 0;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .options {
+    position: absolute;
+    top: 3px;
+    width: 100%;
+    height: 40px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid lightblue;
+    gap: 0;
+  }
+  .drawing-canvas{
+    width: 100%;
+    margin:0
+  }
+
+  .sketch-picker {
+  position: absolute;
+  top: 5vh;
+}
+}
