@@ -126,7 +126,7 @@ footer {
   border-top-right-radius: 8px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 960px) {
   .container,
   .nav-container {
     margin: 0;

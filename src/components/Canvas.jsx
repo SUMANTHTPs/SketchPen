@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDrawingContext } from "../context/drawingContext";
 
 const Canvas = () => {
@@ -10,6 +10,23 @@ const Canvas = () => {
     startDrawing,
     endDrawing,
   } = useDrawingContext();
+
+  useEffect(() => {
+    // Add touchmove event listener to prevent swipe-down-to-refresh behavior
+    const preventRefresh = (event) => {
+      event.preventDefault();
+    };
+
+    // Attach the event listener to the canvas
+    const canvas = canvasRef.current;
+    canvas.addEventListener("touchmove", preventRefresh, { passive: false });
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      canvas.removeEventListener("touchmove", preventRefresh);
+    };
+  }, [canvasRef]);
+  
   return (
     <canvas
       ref={canvasRef}
