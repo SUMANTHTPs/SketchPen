@@ -63,7 +63,7 @@
 
 .nav-container h1 {
   padding: 5px 10px;
-  font-family: 'Pacifico', sans-serif;
+  font-family: "Pacifico", sans-serif;
 }
 
 button {
@@ -79,22 +79,31 @@ button {
 }
 
 .multi-color-text {
-    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  background: linear-gradient(
+    45deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .slider {
   -webkit-appearance: none;
   width: 100%;
   height: 10px;
-  border-radius: 5px;  
+  border-radius: 5px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider::-webkit-slider-thumb {
@@ -102,7 +111,7 @@ button {
   appearance: none;
   width: 20px;
   height: 18px;
-  border-radius: 50%; 
+  border-radius: 50%;
   background: rgb(32, 32, 32);
   cursor: pointer;
 }
@@ -118,10 +127,12 @@ footer {
 }
 
 @media (max-width: 780px) {
-  .container, .nav-container {
+  .container,
+  .nav-container {
     margin: 0;
     margin-bottom: 8px;
     position: relative;
+    padding: 0;
   }
   .options {
     position: absolute;
@@ -133,13 +144,17 @@ footer {
     border-bottom: 1px solid lightblue;
     gap: 0;
   }
-  .drawing-canvas{
+  .drawing-canvas {
     width: 100%;
-    margin:0
+    margin: 0;
   }
 
   .sketch-picker {
-  position: absolute;
-  top: 5vh;
-}
+    position: absolute;
+    top: 5vh;
+  }
+  footer {
+    padding: 0;
+    margin-bottom: 0;
+  }
 }

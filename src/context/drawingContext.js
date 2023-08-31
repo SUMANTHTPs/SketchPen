@@ -20,13 +20,30 @@ export function DrawingContextProvider({ children }) {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth * 0.96;
-        canvas.height = window.innerHeight * 0.85;
+        canvas.height = window.innerHeight * 0.77;
         setContext(ctx);
     }
+
+    const getCoordinates = (event) => {
+        const canvas = canvasRef.current;
+        const { left, top } = canvas.getBoundingClientRect();
+
+        if (event.type.startsWith("touch")) {
+            const touch = event.touches[0];
+            const offsetX = touch.clientX - left;
+            const offsetY = touch.clientY - top;
+            return { offsetX, offsetY };
+        } else {
+            const offsetX = event.clientX - left;
+            const offsetY = event.clientY - top;
+            return { offsetX, offsetY };
+        }
+    };
+
     const draw = (event) => {
+        event.preventDefault();
         if (!drawing) return;
-        const { offsetX, offsetY } = event.nativeEvent;
-        // Set the composite operation
+        const { offsetX, offsetY } = getCoordinates(event);
         context.globalCompositeOperation = erasing
             ? "destination-out"
             : "source-over";
@@ -35,7 +52,8 @@ export function DrawingContextProvider({ children }) {
     };
 
     const startDrawing = (event) => {
-        const { offsetX, offsetY } = event.nativeEvent;
+        event.preventDefault();
+        const { offsetX, offsetY } = getCoordinates(event);
         context.beginPath();
         context.lineWidth = penSize;
         context.moveTo(offsetX, offsetY);

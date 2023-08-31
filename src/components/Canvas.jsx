@@ -17,6 +17,10 @@ const Canvas = () => {
       onMouseMove={draw}
       onMouseUp={endDrawing}
       onMouseOut={endDrawing}
+      onTouchStart={startDrawing}
+      onTouchMove={draw}
+      onTouchEnd={endDrawing}
+      onTouchCancel={endDrawing}
       className="drawing-canvas"
       style={{
         border: ".1px solid lightgrey",
