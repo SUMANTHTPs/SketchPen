@@ -34,6 +34,11 @@ const DrawingCanvas = () => {
 
   useEffect(() => {
     setCanvasContext();
+
+    window.addEventListener("resize", setCanvasContext);
+    return () => {
+      window.removeEventListener("resize", setCanvasContext);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
