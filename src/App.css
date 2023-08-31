@@ -58,6 +58,7 @@
   padding: 4px;
   border-radius: 10px;
   cursor: pointer;
+  width: 100%;
 }
 
 .nav-container h1 {
@@ -107,6 +108,7 @@ button {
 }
 
 footer {
+  width: 100%;
   text-align: center;
   padding: 10px;
   background-color: #add8e6;
